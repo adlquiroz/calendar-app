@@ -85,7 +85,7 @@ async function listEvents(auth) {
 	const events = response.data.items;
 	if (!events || events.length === 0) {
 		console.log('No hay eventos cercanos encontrados');
-		client.create({ body: 'No hay eventos cercanos encontrados', from: "+19209900141", to: "+529616604592" }).then(message => console.log(message.sid));
+		client.create({ body: 'No hay eventos cercanos encontrados', from: numberFron, to: numberFor }).then(message => console.log(message.sid));
 		return;
 	}
 
@@ -107,7 +107,7 @@ async function listEvents(auth) {
 		}
 	});
 	if (messageBoddy.length !== 0) {
-		client.create({ body: messageBoddy.join(', '), from: "+19209900141", to: "+529616604592" }).then(message => console.log(message.sid));
+		client.create({ body: messageBoddy.join(', '), from: numberFron, to: numberFor }).then(message => console.log(message.sid));
 	}
 }
 
