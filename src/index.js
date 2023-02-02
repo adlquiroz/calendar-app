@@ -95,7 +95,7 @@ async function listEvents(auth) {
 	}).filter(element => {
 
 		const splitedString = element.split(", ");
-		const dateString = splitedString[0];
+		const dateString = splitedString[0];1
 		const date = new Date();
 		const day = date.getDate().toString();
 		const month = (date.getMonth() + 1).toString();
