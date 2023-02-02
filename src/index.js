@@ -84,12 +84,11 @@ async function listEvents(auth) {
 	});
 	const events = response.data.items;
 	if (!events || events.length === 0) {
-		//console.log('No hay eventos cercanos encontrados');
+		console.log('No hay eventos cercanos encontrados');
 		client.create({ body: 'No hay eventos cercanos encontrados', from: "+19209900141", to: "+529616604592" }).then(message => console.log(message.sid));
 		return;
 	}
 
-	//console.log('Upcoming 10 events:');
 	const messageBoddy = events.map((event, i) => {
 		const start = newDateFormat(event.start.dateTime || event.start.date);
 		return start + ' - ' + event.summary;
@@ -117,16 +116,8 @@ authorize().then(logIn => {
 }).catch(console.error);
 
 
-function newDateFormat(date) { //Toma el formato ISO y lo convierte a un formato mas amigable (dd-mm-yy).
+function newDateFormat(date) { 
 	date = new Date(date);
 	return date.toLocaleString('es-MX', { timeZone: 'America/Mexico_City' });
 };
 
-//eventos del dia... filter(validar si el evento es del dia actual)
-
-//crear un arreglo con las descripciones y al final para mandarlo hacer un join para unirlos con una coma
-
-
-
-//el return del filter tiene que ser true
-// extraer solo la fecha
