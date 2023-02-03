@@ -3,10 +3,7 @@ import fs from 'fs/promises';
 import process from 'process';
 import { authenticate } from '@google-cloud/local-auth';
 import { google } from 'googleapis';
-import { client } from "./sms.js";
-import { ConversationPage } from 'twilio/lib/rest/conversations/v1/conversation.js';
-import { Console } from 'console';
-
+import { client, sendMessageFrom, sendMessageFor } from "./sms.js"
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
@@ -84,8 +81,7 @@ async function listEvents(auth) {
 	});
 	const events = response.data.items;
 	if (!events || events.length === 0) {
-		console.log('No hay eventos cercanos encontrados');
-		client.create({ body: 'No hay eventos cercanos encontrados', from: numberFron, to: numberFor }).then(message => console.log(message.sid));
+		client.create({ body: 'No hay eventos cercanos encontrados', from: sendMessageFrom, to: sendMessageFor }).then(message => console.log(message.sid));
 		return;
 	}
 
@@ -95,7 +91,7 @@ async function listEvents(auth) {
 	}).filter(element => {
 
 		const splitedString = element.split(", ");
-		const dateString = splitedString[0];1
+		const dateString = splitedString[0]; 1
 		const date = new Date();
 		const day = date.getDate().toString();
 		const month = (date.getMonth() + 1).toString();
@@ -107,7 +103,7 @@ async function listEvents(auth) {
 		}
 	});
 	if (messageBoddy.length !== 0) {
-		client.create({ body: messageBoddy.join(', '), from: numberFron, to: numberFor }).then(message => console.log(message.sid));
+		client.create({ body: messageBoddy.join(', '), from: sendMessageFrom, to: sendMessageFor }).then(message => console.log(message.sid));
 	}
 }
 
@@ -116,7 +112,7 @@ authorize().then(logIn => {
 }).catch(console.error);
 
 
-function newDateFormat(date) { 
+function newDateFormat(date) {
 	date = new Date(date);
 	return date.toLocaleString('es-MX', { timeZone: 'America/Mexico_City' });
 };
